@@ -1,0 +1,6 @@
+H:\C# Financial markets\C-FinancialMarkets\2.3PricingOptionZeroCoupon\Chapter2\bin\Debug\Chapter2.exe.config
+H:\C# Financial markets\C-FinancialMarkets\2.3PricingOptionZeroCoupon\Chapter2\bin\Debug\Chapter2.exe
+H:\C# Financial markets\C-FinancialMarkets\2.3PricingOptionZeroCoupon\Chapter2\bin\Debug\Chapter2.pdb
+H:\C# Financial markets\C-FinancialMarkets\2.3PricingOptionZeroCoupon\Chapter2\obj\Debug\PricingOptionZeroCoupon.csprojResolveAssemblyReference.cache
+H:\C# Financial markets\C-FinancialMarkets\2.3PricingOptionZeroCoupon\Chapter2\obj\Debug\Chapter2.exe
+H:\C# Financial markets\C-FinancialMarkets\2.3PricingOptionZeroCoupon\Chapter2\obj\Debug\Chapter2.pdb
