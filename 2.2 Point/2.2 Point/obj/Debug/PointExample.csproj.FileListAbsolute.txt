@@ -1,0 +1,5 @@
+c:\users\valentina\documents\visual studio 2012\Projects\2.2 Point\2.2 Point\bin\Debug\2.2 Point.exe.config
+c:\users\valentina\documents\visual studio 2012\Projects\2.2 Point\2.2 Point\bin\Debug\2.2 Point.exe
+c:\users\valentina\documents\visual studio 2012\Projects\2.2 Point\2.2 Point\bin\Debug\2.2 Point.pdb
+c:\users\valentina\documents\visual studio 2012\Projects\2.2 Point\2.2 Point\obj\Debug\2.2 Point.exe
+c:\users\valentina\documents\visual studio 2012\Projects\2.2 Point\2.2 Point\obj\Debug\2.2 Point.pdb

@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PointExample", "2.2 Point\PointExample.csproj", "{01524253-B180-4304-9C28-AA3388734C22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestPoint", "UnitTestPoint\UnitTestPoint.csproj", "{D23AF64E-1E29-4B5D-A5F4-56FCF99DDF3E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01524253-B180-4304-9C28-AA3388734C22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01524253-B180-4304-9C28-AA3388734C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01524253-B180-4304-9C28-AA3388734C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01524253-B180-4304-9C28-AA3388734C22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D23AF64E-1E29-4B5D-A5F4-56FCF99DDF3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D23AF64E-1E29-4B5D-A5F4-56FCF99DDF3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D23AF64E-1E29-4B5D-A5F4-56FCF99DDF3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D23AF64E-1E29-4B5D-A5F4-56FCF99DDF3E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

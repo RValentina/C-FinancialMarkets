@@ -1,0 +1,7 @@
+c:\users\valentina\documents\visual studio 2012\Projects\2.2 Point\UnitTestPoint\bin\Debug\UnitTestPoint.dll
+c:\users\valentina\documents\visual studio 2012\Projects\2.2 Point\UnitTestPoint\bin\Debug\UnitTestPoint.pdb
+c:\users\valentina\documents\visual studio 2012\Projects\2.2 Point\UnitTestPoint\obj\Debug\UnitTestPoint.csprojResolveAssemblyReference.cache
+c:\users\valentina\documents\visual studio 2012\Projects\2.2 Point\UnitTestPoint\obj\Debug\UnitTestPoint.dll
+c:\users\valentina\documents\visual studio 2012\Projects\2.2 Point\UnitTestPoint\obj\Debug\UnitTestPoint.pdb
+c:\users\valentina\documents\visual studio 2012\Projects\2.2 Point\UnitTestPoint\bin\Debug\2.2 Point.exe
+c:\users\valentina\documents\visual studio 2012\Projects\2.2 Point\UnitTestPoint\bin\Debug\2.2 Point.pdb

@@ -1,0 +1,6 @@
+c:\users\valentina\documents\visual studio 2012\Projects\Chapter2\Chapter2\bin\Debug\Chapter2.exe.config
+c:\users\valentina\documents\visual studio 2012\Projects\Chapter2\Chapter2\bin\Debug\Chapter2.exe
+c:\users\valentina\documents\visual studio 2012\Projects\Chapter2\Chapter2\bin\Debug\Chapter2.pdb
+c:\users\valentina\documents\visual studio 2012\Projects\Chapter2\Chapter2\obj\Debug\2.1MiniOptionPricing.csprojResolveAssemblyReference.cache
+c:\users\valentina\documents\visual studio 2012\Projects\Chapter2\Chapter2\obj\Debug\Chapter2.exe
+c:\users\valentina\documents\visual studio 2012\Projects\Chapter2\Chapter2\obj\Debug\Chapter2.pdb
