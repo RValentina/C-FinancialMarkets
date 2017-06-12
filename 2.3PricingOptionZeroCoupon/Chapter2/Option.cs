@@ -152,24 +152,62 @@ namespace MiniOptionPricing
             return -T * Math.Exp((b - r) * T) * SpecialFunctions.N(-d2);
         }
 
-        public double CallCharm(double U)
+        private double CallCharm(double U)
         {
-            return 0;
+            var (d1, d2, tmp) = D(U);
+
+            //From Haug - Complete guide to Option Pricing formulas
+            var x = -Math.Exp((b - r) * T);
+            var y = SpecialFunctions.n(d1) * ((b / (sig * Math.Sqrt(T))) - (d2 / (2 * T)));
+            var z = (b - r) * SpecialFunctions.N(d1);
+
+            var charm = x * (y + z);
+
+            return charm;
         }
 
-        public double PutCharm(double U)
+        private double PutCharm(double U)
         {
-            return 0;
+            var (d1, d2, tmp) = D(U);
+
+            //From Haug - Complete guide to Option Pricing formulas
+            var x = -Math.Exp((b - r) * T);
+            var y = SpecialFunctions.n(d1) * ((b / (sig * Math.Sqrt(T))) - (d2 / (2 * T)));
+            var z = (b - r) * SpecialFunctions.N(-d1);
+
+            var charm = x * (y - z);
+
+            return charm;
         }
 
-        public double CallVomma(double U)
+        /// <summary>
+        /// Calculates the Call Vomma
+        /// </summary>
+        /// <remarks>
+        /// From Ch.3 Homework
+        /// </remarks>
+        /// <param name="U">Price of the underlying instrument</param>
+        /// <returns>The value of Vomma</returns>
+        private double CallVomma(double U)
         {
-            return 0;
+            var (d1, d2, tmp) = D(U);
+
+            return Vega(d1 * d2 / sig);
         }
 
-        public double PutVomma(double U)
+        /// <summary>
+        /// Calculates the Call Vomma
+        /// </summary>
+        /// <remarks>
+        /// From Ch.3 Homework
+        /// </remarks>
+        /// <param name="U">Price of the underlying instrument</param>
+        /// <returns>The value of Vomma</returns>
+        private double PutVomma(double U)
         {
-            return 0;
+            var (d1, d2, tmp) = D(U);
+
+            return Vega(d1 * d2 / sig);
         }
     }
 }
