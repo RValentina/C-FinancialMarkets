@@ -4,20 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniOptionPricing
+namespace PricingSwaps
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Mediator med = new Mediator();
-            med.calculate();
-
-            Console.ReadLine();
-
         }
-
-
-
     }
 }

@@ -42,7 +42,7 @@ namespace MiniOptionPricing
             Console.Write("1. Call, 2. Put: ");
             type = Convert.ToString(Console.ReadLine());
 
-            Option opt = new Option(type, T, K, b, r, sig, s);
+            Option opt = new Option(OptionType.Call, T, K, b, r, sig, s);
             return opt;
         }
     }

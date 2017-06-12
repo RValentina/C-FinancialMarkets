@@ -19,8 +19,6 @@ namespace MiniOptionPricing
 
             Option myOption = fac.create();
 
-            
-
             //Console.Write("Give the underlying price: ");
             //double S = Convert.ToDouble(Console.ReadLine());
 
