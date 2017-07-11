@@ -40,6 +40,18 @@ public class NumericMatrix<T> : Matrix<T>
     {
 
     }
+
+    public new Vector<T> getRow(int rownum)
+    {
+        Vector<T> result = new Vector<T>(Columns, MinColumnIndex);
+
+        for (int i = result.MinIndex; i <= result.MaxIndex; i++)
+        {
+            result[i] = this[rownum, i];
+        }
+
+        return result;
+    }
      // Operators
 
     // Addition

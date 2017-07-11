@@ -8,13 +8,13 @@ namespace MiniOptionPricing
 {
     public class SpecialFunctions
     {
-        static public double n(double x)
+        public static double n(double x)
         {
             double A = 1.0 / Math.Sqrt(2.0 * 3.1415);
             return A * Math.Exp(-x * x * 0.5); 
         }
 
-        static public double N(double x)
+        public static double N(double x)
         {
             if (Double.IsNaN(x) || Double.IsInfinity(x))
                 throw new Exception("The number is not valid!");

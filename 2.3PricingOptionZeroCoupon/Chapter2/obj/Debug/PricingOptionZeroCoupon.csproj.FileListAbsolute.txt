@@ -10,3 +10,8 @@ C:\code\C-FinancialMarkets\2.3PricingOptionZeroCoupon\Chapter2\bin\Debug\Chapter
 C:\code\C-FinancialMarkets\2.3PricingOptionZeroCoupon\Chapter2\obj\Debug\PricingOptionZeroCoupon.csprojResolveAssemblyReference.cache
 C:\code\C-FinancialMarkets\2.3PricingOptionZeroCoupon\Chapter2\obj\Debug\Chapter2.exe
 C:\code\C-FinancialMarkets\2.3PricingOptionZeroCoupon\Chapter2\obj\Debug\Chapter2.pdb
+C:\code\C-FinancialMarkets\2.3PricingOptionZeroCoupon\Chapter2\bin\Debug\ClassLibraryArrays.dll
+C:\code\C-FinancialMarkets\2.3PricingOptionZeroCoupon\Chapter2\bin\Debug\ClassLibraryArrays.pdb
+C:\code\C-FinancialMarkets\2.3PricingOptionZeroCoupon\Chapter2\bin\Debug\Chapter6.exe
+C:\code\C-FinancialMarkets\2.3PricingOptionZeroCoupon\Chapter2\bin\Debug\Chapter6.pdb
+C:\code\C-FinancialMarkets\2.3PricingOptionZeroCoupon\Chapter2\bin\Debug\Chapter6.exe.config

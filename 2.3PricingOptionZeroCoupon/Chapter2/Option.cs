@@ -1,179 +1,222 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
+using Chapter6;
 
 namespace MiniOptionPricing
 {
     public class Option
     {
-        private double r; //interest rate
-        private double sig; //volatility
-        private double K; //strike price
-        private double T; //expiry date
-        private double b; //cost of carry
-        private double s = 1; //maturity
+        private double _r; //interest rate
+        private double _sig; //volatility
+        private double _k; //strike price
+        private double _t; //expiry date
+        private double _b; //cost of carry
+        private readonly double _s = 1; //maturity
+        private readonly double? _underlyingPrice;
 
-        private OptionType type;
+        private OptionType _type;
 
         public Option()
         {
             //default call option
-            init();
+            Init();
         }
 
         public Option(OptionType optionType)
         {
-            init();
-            type = optionType;
+            Init();
+            _type = optionType;
         }
 
         public Option(OptionType optionType, double expiry, double strike, double costOfCarry,
             double interest, double volatility)
         {
-            type = optionType;
-            T = expiry;
-            K = strike;
-            b = costOfCarry;
-            r = interest;
-            sig = volatility;
+            _type = optionType;
+            _t = expiry;
+            _k = strike;
+            _b = costOfCarry;
+            _r = interest;
+            _sig = volatility;
         }
 
         public Option(OptionType optionType, double expiry, double strike, double costOfCarry,
             double interest, double volatility, double maturity)
         {
-            type = optionType;
-            T = expiry;
-            K = strike;
-            b = costOfCarry;
-            r = interest;
-            sig = volatility;
-            s = maturity;
+            _type = optionType;
+            _t = expiry;
+            _k = strike;
+            _b = costOfCarry;
+            _r = interest;
+            _sig = volatility;
+            _s = maturity;
 
         }
 
-        public Option(OptionType optionType, string underlying)
+        //constructor for option on the equity basket
+        public Option(OptionType optionType, double expiry, double strike, double interest, Vector<double> pricesVector,
+            Vector<double> weightsVector, NumericMatrix<double> correlationMatrix, Vector<double> volatilityVector) 
         {
-            init();
-            type = optionType;
+            _type = optionType;
+            _t = expiry;
+            _k = strike;
+            _b = 0;
+            _r = interest;
+            _sig = VolatilityConvertibleBond(pricesVector, weightsVector, correlationMatrix, volatilityVector);
+            _s = expiry;
+            _underlyingPrice = M(pricesVector, weightsVector, correlationMatrix, volatilityVector).M1;
+        }
+
+        //constructor for exchange option
+        public Option(OptionType optionType, double expiry, double strike, double interestU, double interestV,
+            double volatilityU, double volatilityV, double correlationUv) : this(optionType, expiry, strike, interestU - interestV, interestU, 
+                                                            Math.Sqrt(volatilityU * volatilityU + volatilityV * volatilityV - 2 * correlationUv * volatilityU * volatilityV))
+        {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private (double d1, double d2, double temp) D(double U)
+        private (double d1, double d2, double temp) D(double u)
         {
-            double temp = sig * Math.Sqrt(T);
-            double d1 = (Math.Log(U / K) + (b + (sig * sig) * 0.5) * T) / temp;
+            double temp = _sig * Math.Sqrt(_t);
+            double d1 = (Math.Log(u / _k) + (_b + (_sig * _sig) * 0.5) * _t) / temp;
             double d2 = d1 - temp;
 
             return (d1, d2, temp);
         }
 
-        //Kernel functions (Haug)
-        protected virtual double CallPrice(double U)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private (double M1, double M2) M(Vector<double> pricesVector, Vector<double> weightsVector, NumericMatrix<double> correlationMatrix, Vector<double> volatilityVector)
         {
-            double tmp = sig * Math.Sqrt(T);
+            Vector<double> pricesWeightsVector = pricesVector * weightsVector;
+            double m1 = pricesWeightsVector.Sum();
 
-            var d = D(U);
+            NumericMatrix<double> volatilityMatrix = new NumericMatrix<double>(volatilityVector.Length, volatilityVector.Length, 0, 0);
 
-            return (U * Math.Exp((b - r) * T) * SpecialFunctions.N(d.d1))
-              - (K * Math.Exp(-r * T) * SpecialFunctions.N(d.d2));
+            for (int i = 0; i < volatilityVector.Length; i++)
+            for (int j = 0; j < volatilityVector.Length; j++)
+            {
+                volatilityMatrix[i,j] = volatilityVector[i] * volatilityVector[j] * correlationMatrix[i, j] * _t;
+            }
+
+            NumericMatrix<double> expMatrix = volatilityMatrix.Exp();
+
+            double m2 = 0;
+
+            for (int row = 0; row < expMatrix.Rows; row++)
+            {
+                m2 += (pricesWeightsVector * expMatrix.getRow(row)).Sum() * weightsVector[row] * pricesVector[row];
+            }
+
+            return (m1, m2);
         }
 
-        protected virtual double PutPrice(double U)
+        private double VolatilityConvertibleBond(Vector<double> pricesVector, Vector<double> weightsVector, NumericMatrix<double> correlationMatrix, Vector<double> volatilityVector)
         {
-            var d = D(U);
+            var m = M(pricesVector, weightsVector, correlationMatrix, volatilityVector);
 
-            return (K * Math.Exp(-r * T) * SpecialFunctions.N(- d.d2))
-                - (U * Math.Exp((b - r) * T) * SpecialFunctions.N(- d.d1));
+            return Math.Sqrt(Math.Log(m.M2 / (m.M1 * m.M1)) * 1/_t);
+        }
+
+        //Kernel functions (Haug)
+        protected virtual double CallPrice(double u)
+        {
+            var d = D(u);
+
+            return (u * Math.Exp((_b - _r) * _t) * SpecialFunctions.N(d.d1))
+              - (_k * Math.Exp(-_r * _t) * SpecialFunctions.N(d.d2));
+        }
+
+        protected virtual double PutPrice(double u)
+        {
+            var d = D(u);
+
+            return (_k * Math.Exp(-_r * _t) * SpecialFunctions.N(- d.d2))
+                - (u * Math.Exp((_b - _r) * _t) * SpecialFunctions.N(- d.d1));
         }
 
         public double UnderlyingPrice()
         {
-            return Math.Exp(-r * s) / Math.Exp(-r * T);
+            return Math.Exp(-_r * _s) / Math.Exp(-_r * _t);
         }
 
-        public void init()
+        public void Init()
         {
             //default values
-            r = 0.08;
-            sig = 0.30;
-            K = 65.0;
-            T = 0.25;
-            b = r;
+            _r = 0.08;
+            _sig = 0.30;
+            _k = 65.0;
+            _t = 0.25;
+            _b = _r;
 
-            type = OptionType.Call;
+            _type = OptionType.Call;
         }
 
         //calculate option price and sensitivities
-        public double Price(double U)
+        public double Price(double u)
         {
-            if (type == OptionType.Call)
-                return CallPrice(U);
+            if (_type == OptionType.Call)
+                return CallPrice(u);
             else
-                return PutPrice(U);
+                return PutPrice(u);
         }
 
         //calculate option price for a zero coupon bond
         public double Price()
         {
-            double U = UnderlyingPrice();
-
-            return Price(U);
+            return Price(_underlyingPrice ?? UnderlyingPrice());
             
         }
 
-        public double Vega(double U)
+        public double Vega(double u)
         {
-            double tmp = sig * Math.Sqrt(T);
-            double d1 = (Math.Log(U / K) + (b + (sig * sig) * 0.5) * T) / tmp;
+            double tmp = _sig * Math.Sqrt(_t);
+            double d1 = (Math.Log(u / _k) + (_b + (_sig * _sig) * 0.5) * _t) / tmp;
 
-            return s * Math.Exp((b - r) * T) * SpecialFunctions.n(d1) * Math.Sqrt(T);
+            return _s * Math.Exp((_b - _r) * _t) * SpecialFunctions.n(d1) * Math.Sqrt(_t);
             //return 0;
         }
 
-        public double CallRho(double U)
+        public double CallRho(double u)
         {
-            double tmp = sig * Math.Sqrt(T);
+            double tmp = _sig * Math.Sqrt(_t);
 
-            double d1 = (Math.Log(U / K) + (b + (sig * sig) * 0.5) * T) / tmp;
+            double d1 = (Math.Log(u / _k) + (_b + (_sig * _sig) * 0.5) * _t) / tmp;
             double d2 = d1 - tmp;
 
-            return T * Math.Exp((b - r) * T) * SpecialFunctions.N(d2);
+            return _t * Math.Exp((_b - _r) * _t) * SpecialFunctions.N(d2);
         }
 
-        public double PutRho(double U)
+        public double PutRho(double u)
         {
-            double tmp = sig * Math.Sqrt(T);
+            double tmp = _sig * Math.Sqrt(_t);
 
-            double d1 = (Math.Log(U / K) + (b + (sig * sig) * 0.5) * T) / tmp;
+            double d1 = (Math.Log(u / _k) + (_b + (_sig * _sig) * 0.5) * _t) / tmp;
             double d2 = d1 - tmp;
 
-            return -T * Math.Exp((b - r) * T) * SpecialFunctions.N(-d2);
+            return -_t * Math.Exp((_b - _r) * _t) * SpecialFunctions.N(-d2);
         }
 
-        private double CallCharm(double U)
+        public double CallCharm(double u)
         {
-            var (d1, d2, tmp) = D(U);
+            var (d1, d2, tmp) = D(u);
 
             //From Haug - Complete guide to Option Pricing formulas
-            var x = -Math.Exp((b - r) * T);
-            var y = SpecialFunctions.n(d1) * ((b / (sig * Math.Sqrt(T))) - (d2 / (2 * T)));
-            var z = (b - r) * SpecialFunctions.N(d1);
+            var x = -Math.Exp((_b - _r) * _t);
+            var y = SpecialFunctions.n(d1) * ((_b / (_sig * Math.Sqrt(_t))) - (d2 / (2 * _t)));
+            var z = (_b - _r) * SpecialFunctions.N(d1);
 
             var charm = x * (y + z);
 
             return charm;
         }
 
-        private double PutCharm(double U)
+        public double PutCharm(double u)
         {
-            var (d1, d2, tmp) = D(U);
+            var (d1, d2, tmp) = D(u);
 
             //From Haug - Complete guide to Option Pricing formulas
-            var x = -Math.Exp((b - r) * T);
-            var y = SpecialFunctions.n(d1) * ((b / (sig * Math.Sqrt(T))) - (d2 / (2 * T)));
-            var z = (b - r) * SpecialFunctions.N(-d1);
+            var x = -Math.Exp((_b - _r) * _t);
+            var y = SpecialFunctions.n(d1) * ((_b / (_sig * Math.Sqrt(_t))) - (d2 / (2 * _t)));
+            var z = (_b - _r) * SpecialFunctions.N(-d1);
 
             var charm = x * (y - z);
 
@@ -186,13 +229,13 @@ namespace MiniOptionPricing
         /// <remarks>
         /// From Ch.3 Homework
         /// </remarks>
-        /// <param name="U">Price of the underlying instrument</param>
+        /// <param name="u">Price of the underlying instrument</param>
         /// <returns>The value of Vomma</returns>
-        private double CallVomma(double U)
+        public double CallVomma(double u)
         {
-            var (d1, d2, tmp) = D(U);
+            var (d1, d2, tmp) = D(u);
 
-            return Vega(d1 * d2 / sig);
+            return Vega(d1 * d2 / _sig);
         }
 
         /// <summary>
@@ -201,13 +244,13 @@ namespace MiniOptionPricing
         /// <remarks>
         /// From Ch.3 Homework
         /// </remarks>
-        /// <param name="U">Price of the underlying instrument</param>
+        /// <param name="u">Price of the underlying instrument</param>
         /// <returns>The value of Vomma</returns>
-        private double PutVomma(double U)
+        public double PutVomma(double u)
         {
-            var (d1, d2, tmp) = D(U);
+            var (d1, d2, tmp) = D(u);
 
-            return Vega(d1 * d2 / sig);
+            return Vega(d1 * d2 / _sig);
         }
     }
 }

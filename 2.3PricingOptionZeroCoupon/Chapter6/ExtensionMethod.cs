@@ -36,5 +36,18 @@ namespace Chapter6
 
             return Math.Sqrt(Convert.ToDouble(result));
         }
+
+        public static NumericMatrix<double> Exp<T>(this NumericMatrix<T> m) where T: IConvertible
+        {
+            NumericMatrix<double> expMatrix = new NumericMatrix<double>(m.Rows, m.Columns, 0, 0);
+
+            for (int i = 0; i < m.Rows; i++)
+            for (int j = 0; j < m.Columns; j++)
+            {
+                expMatrix[i, j] = Math.Exp(Convert.ToDouble(m[i, j]));
+            }
+
+            return expMatrix;
+        }
     }
 }
