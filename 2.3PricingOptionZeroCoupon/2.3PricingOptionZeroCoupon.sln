@@ -7,7 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PricingOptionZeroCoupon", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{BB44BB36-89E4-4132-957D-AD3FAA132BA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter4", "Chapter4\Chapter4.csproj", "{D88286E5-413C-4305-BAE6-C0DEC89066C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter4and5", "Chapter4\Chapter4and5.csproj", "{D88286E5-413C-4305-BAE6-C0DEC89066C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chapter6", "Chapter6\Chapter6.csproj", "{6553A736-8534-43B9-B93E-A6B40CC55895}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibraryArrays", "Datasim\ClassLibraryArrays\ClassLibraryArrays\ClassLibraryArrays.csproj", "{ACCEE025-1FB8-447D-BCA1-C5CF502F3B4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{D88286E5-413C-4305-BAE6-C0DEC89066C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D88286E5-413C-4305-BAE6-C0DEC89066C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D88286E5-413C-4305-BAE6-C0DEC89066C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6553A736-8534-43B9-B93E-A6B40CC55895}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6553A736-8534-43B9-B93E-A6B40CC55895}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6553A736-8534-43B9-B93E-A6B40CC55895}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6553A736-8534-43B9-B93E-A6B40CC55895}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACCEE025-1FB8-447D-BCA1-C5CF502F3B4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACCEE025-1FB8-447D-BCA1-C5CF502F3B4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACCEE025-1FB8-447D-BCA1-C5CF502F3B4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACCEE025-1FB8-447D-BCA1-C5CF502F3B4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
